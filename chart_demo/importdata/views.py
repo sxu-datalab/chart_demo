@@ -14,6 +14,7 @@ def index(request):
 def get_pa_competence(request):
 
     panames = []
+    choices = []
     i = 1
     while True:
         inx = 'pa%d' % i
@@ -22,6 +23,14 @@ def get_pa_competence(request):
             break
         panames.append(tmp)
         i += 1
+
+    if i == 1:
+        panames = ['谷歌公司']
+        results = PatentAuthor.objects.values('name').all()
+        for item in results:
+            choices.append(item['name'])
+
+
     name_labels = []
     attr_labels = [{'name':'专利申请数', 'max': 40},
                    {'name': '专利被引证数', 'max': 20},
@@ -54,8 +63,16 @@ def get_pa_competence(request):
         data.append({'name': paname, 'value': attr_data})
         name_labels.append(paname)
 
+    if i == 1:
+        return JsonResponse(data={'code': 1,
+                              'data':{'chartData':
+                                          {'nameLabels': name_labels, 'indicator': attr_labels, 'series': data},
+                                  'choices':choices}})
+
+
     return JsonResponse(data={'code': 1,
-                              'data':{'nameLabels': name_labels, 'indicator': attr_labels, 'series': data}})
+                              'data':{'chartData':
+                                          {'nameLabels': name_labels, 'indicator': attr_labels, 'series': data}}})
 
 def get_ipc_type(request):
 
@@ -101,4 +118,4 @@ def get_ipc_type(request):
 
             children.append({'value': item2[1], 'name': item2[0],'children': descendants})
         data.append({'value': item[1], 'name': item[0],'children': children})
-    return JsonResponse(data={'code':1, 'data': data})
+    return JsonResponse(data={'code':1, 'data': {'chartData':data}})
