@@ -31,18 +31,22 @@
                     <div class="card-body">
                         <h4 class="card-title">分析方法</h4>
                         <div style="padding: 20px 0px 20px 0px;">
-                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('目标专利全球申请趋势','SQQS',this)">全球专利申请趋势</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请人分析——雷达图','SQQS',this)">申请人分析——雷达图</button></p>
 
-                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('全球专利分布图','MBYZ',this)">全球专利分布图</button></p>
-                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高强度专利分析','FZQS',this)">高强度专利分析</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('IPC分类分析——旭日图','MBYZ',this)">IPC分类分析——旭日图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('LDA主体分析——词云图','FZQS',this)">LDA主体分析——词云图</button></p>
 
                             <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('目标专利来源国分析','LYG',this)">词云</button></p>-->
-                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利来源国分析','MDG',this)">专利来源国分析</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高频词分析——词云图','MDG',this)">高频词分析——词云图</button></p>
                             <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('IPC分类分析','IFL',this)">IPC分类分析</button></p>-->
                             <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利图景分析','ZLTJ',this)">专利图景分析</button></p>-->
                             <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高强度专利分析','GQD',this)">高强度专利分析</button></p>-->
-                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请人高强度分析','SQRGQD',this)">申请人高强度分析</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高频词分析——旭日图','SQRGQD',this)">高频词分析——旭日图</button></p>
                             <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('同族专利分析','TZZL',this)">领域内聚类分析</button></p>-->
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请量变化趋势——饼图','TZZL',this)">申请量变化趋势——饼图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('公司专利数量分析——饼图','LYG',this)">公司专利数量分析——饼图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('前8申请人分析——折线图','IFL',this)">前8申请人分析——折线图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('top5申请量——折线图','GQD',this)">top5申请量——折线图</button></p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +56,35 @@
                     <div class="card-body">
                         <!--                            <h4 class="h4">分析结果</h4>-->
                         <!--                            <p class="card-description"> Analysis Results</p>-->
-                        <div id="SQQSAnaChartMain" style="width: 100%;height: 100%; "> </div>
+                        <div id="SQQSAnaChartMain" style="width: 100%;height: 100%; ">
+
+
+                            <div class="likes" style="width: 25%; float:left;">
+                                <div style="margin-bottom: 5px;">
+                                    <h3>交互：指定申请人</h3>
+                                    <input type="button" value="进行分析" onclick="newananlyse()" />
+                                </div>
+                                <input type="checkbox" id="boxid" onclick="setAllNo()" />全选/全不选<br />
+<!--                                <input type="checkbox" name="love" value="GOOGLE公司" />GOOGLE公司<br />-->
+                                <input type="checkbox" name="love" value="微软公司" />微软公司<br />
+                                <input type="checkbox" name="love" value="谷歌公司" />谷歌公司<br />
+                                <input type="checkbox" name="love" value="NCR公司" />NCR公司<br />
+                                <input type="checkbox" name="love" value="苹果公司" />苹果公司<br />
+                                <input type="checkbox" name="love" value="波音公司" />波音公司<br />
+                                <input type="checkbox" name="love" value="雅虎公司" />雅虎公司<br />
+                                <input type="checkbox" name="love" value="SMK公司" />SMK公司<br />
+                                <input type="checkbox" name="love" value="CAN科技公司" />CAN科技公司<br />
+                                <input type="checkbox" name="love" value="IGT公司" />IGT公司<br />
+                                <input type="checkbox" name="love" value="UTBK公司" />UTBK公司<br />
+                                <input type="checkbox" name="love" value="彩滋公司" />彩滋公司<br />
+                                <input type="checkbox" name="love" value="威睿公司" />威睿公司<br />
+                                <input type="checkbox" name="love" value="公共电视公司" />公共电视公司<br />
+                                <input type="checkbox" name="love" value="FMR公司" />FMR公司<br />
+                                <input type="checkbox" name="love" value="施乐公司" />施乐公司<br />
+                                <input type="checkbox" name="love" value="MRT公司" />MRT公司<br />
+                            </div>
+                            <div id="SQQSAnaChartMain1" style="width: 75%;height: 100%; float:right;"> </div>
+                        </div>
                         <div id="FZQSAnaChartMain"  style="width: 0;height: 0;  "> </div>
                         <div id="MBYZAnaChartMain"  style="width: 0;height: 0;  "> </div>
                         <div id="TZZLAnaChartMain"  style="width: 0;height: 0;  "> </div>
@@ -71,10 +103,9 @@
 
 </body>
 <script type="text/javascript" src="jquery-3.5.1.min.js" language="JavaScript"></script>
-<!--<script src="layui/layui.js"></script>-->
-<script src="base64.min.js"></script>
-<!--<script src="js/config.js"></script>-->
-<script src="echarts.js"></script>
+<script type="text/javascript" src="base64.min.js"></script>
+<script type="text/javascript" src="echarts.js"></script>
+<script type="text/javascript" src="echarts-wordcloud.min.js"></script>
 <script type="text/javascript">
     var SQQSAnaChartMainflag = 'none';
     var FZQSAnaChartMainflag = 'none';
@@ -87,6 +118,37 @@
     var GQDAnaChartMainflag = 'none';
     var SQRGQDAnaChartMainflag = 'none';
 
+    function setAllNo(){
+        var box = document.getElementById("boxid");
+        var loves = document.getElementsByName("love");
+        if(box.checked == false){
+            for (var i = 0; i < loves.length; i++) {
+                loves[i].checked = false;
+            }
+        }
+        else{
+            for (var i = 0; i < loves.length; i++) {
+                loves[i].checked = true;
+            }
+        }
+    }
+    var AnadataObjjoahu = new Object();
+    AnadataObjjoahu['pa1'] = '谷歌公司';
+    function newananlyse() {
+        for (let k in  AnadataObjjoahu){
+            // console.log(k);
+            delete AnadataObjjoahu[k]
+        }
+        let linnum = 1 ;
+        $(".likes input:checkbox[name='love']:checked").each(function(i){
+            AnadataObjjoahu['pa'+ linnum.toString()] = $(this).val();
+            linnum ++;
+        });
+        SQQSAnaChartMainflag = 'none';
+        AnadataObj.anacode =  'SQQS';
+        setSQQSmyChart();
+        // console.log(AnadataObj);
+    }
 
     var AnadataObj = new Object();
     AnadataObj = {
@@ -132,17 +194,16 @@
                     break;
                 }
                 chartshowchange('MBYZAnaChartMain');
-                // setMBYZmyChart();
-
+                setMBYZmyChart();
                 break;
             case 'TZZL':
-                //聚类分析
+                //申请量变化趋势
                 if (TZZLAnaChartMainflag === 'haveinline') {
                     chartshowchange('TZZLAnaChartMain');
                     break;
                 }
                 chartshowchange('TZZLAnaChartMain');
-                var TZZLmyChart = echarts.init(document.getElementById('TZZLAnaChartMain'));
+                setTZZLmyChart();
                 TZZLAnaChartMainflag = 'haveinline';
                 break;
             // # 'SQQS','FZQS', 'MBYZ','TZZL','LYG','MDG','IFL','ZLTJ','GQD','SQRGQD',
@@ -152,7 +213,7 @@
                     break;
                 }
                 chartshowchange('LYGAnaChartMain');
-                var LYGmyChart = echarts.init(document.getElementById('LYGAnaChartMain'));
+                setLYGmyChart();
                 LYGAnaChartMainflag = 'haveinline';
                 break;
             case 'MDG':
@@ -160,9 +221,7 @@
                     chartshowchange('MDGAnaChartMain');
                     break;
                 }
-
                 chartshowchange('MDGAnaChartMain');
-
                 setMDGmyChart();
                 break;
             case 'IFL':
@@ -171,7 +230,7 @@
                     break;
                 }
                 chartshowchange('IFLAnaChartMain');
-                var IFLmyChart = echarts.init(document.getElementById('IFLAnaChartMain'));
+                setIFLmyChart();
                 IFLAnaChartMainflag = 'haveinline';
                 break;
             case 'ZLTJ':
@@ -189,7 +248,7 @@
                     break;
                 }
                 chartshowchange('GQDAnaChartMain');
-                var GQDmyChart = echarts.init(document.getElementById('GQDAnaChartMain'));
+                setGQDmyChart();
                 GQDAnaChartMainflag = 'haveinline';
                 break;
             case 'SQRGQD':
@@ -289,27 +348,1006 @@
             "height":"0",
         });
     }
+    //高频词分析-词云图
     function setMDGmyChart() {
-        var MDGmyChart = echarts.init(document.getElementById('MDGAnaChartMain'));
-        MDGmyChart.on('updateAxisPointer', function (event) {
-            var xAxisInfo = event.axesInfo[0];
-            if (xAxisInfo) {
-                var dimension = xAxisInfo.value + 1;
-                myChart.setOption({
-                    series: {
-                        id: 'pie',
+
+        // var img1="<img src='img/Frequence.jpg'>";
+        // $("#MDGAnaChartMain").html("<div style='padding-left: 30%;'>"+img1+"<div/>");
+        var data = {
+            value: [
+                {"name":"大数据","value":0},
+                {"name":"安全","value":213},
+                {"name":"模块","value":100},
+                {"name":"支付","value":388},
+                {"name":"信息安全","value":100},
+                {"name":"用户","value":846},
+                {"name":"信息","value":657},
+                {"name":"消息","value":103},
+                {"name":"设备","value":483},
+                {"name":"在线","value":303},
+                {"name":"辅助","value":133},
+                {"name":"web","value":98},
+                {"name":"广告","value":1536},
+                {"name":"视觉","value":97},
+                {"name":"提示","value":97},
+                {"name":"移动","value":132},
+                {"name":"查询","value":275},
+                {"name":"终端用户","value":96},
+                {"name":"本地","value":96},
+                {"name":"时间","value":96},
+                {"name":"电子邮件","value":296},
+                {"name":"动态","value":124},
+                {"name":"文本","value":162},
+                {"name":"动作","value":156},
+                {"name":"闭环","value":93},
+                {"name":"采购","value":93},
+                {"name":"订单","value":93},
+                {"name":"合规性","value":93},
+                {"name":"管理","value":432},
+                {"name":"支持","value":92},
+                {"name":"服务","value":292},
+                {"name":"移交","value":92},
+                {"name":"协作","value":92},
+                {"name":"交易","value":379},
+                {"name":"目的地","value":91},
+                {"name":"路由","value":91},
+                {"name":"呼叫","value":167},
+                {"name":"行为","value":185},
+                {"name":"付费","value":90},
+                {"name":"跟踪","value":294},
+                {"name":"需求","value":90},
+                {"name":"伙伴","value":90},
+                {"name":"跟随","value":89},
+                {"name":"网页","value":89},
+                {"name":"发布者","value":88},
+                {"name":"选择","value":88},
+                {"name":"优选","value":88},
+                {"name":"类型","value":88},
+                {"name":"电子","value":151},
+                {"name":"文档","value":219},
+                {"name":"交易系统","value":105},
+                {"name":"图像","value":214},
+                {"name":"捕获","value":86},
+                {"name":"自动","value":85},
+                {"name":"远程","value":85},
+                {"name":"协助","value":85},
+                {"name":"提高","value":84},
+                {"name":"版权","value":84},
+                {"name":"收益","value":96},
+                {"name":"因特网","value":104},
+                {"name":"品牌","value":82},
+                {"name":"营销","value":104},
+                {"name":"传播","value":82},
+                {"name":"网络","value":230},
+                {"name":"收集","value":81},
+                {"name":"数据","value":179},
+                {"name":"改进","value":81},
+                {"name":"内容","value":603},
+                {"name":"定向","value":254},
+                {"name":"搜索","value":138},
+                {"name":"广告创意","value":138},
+                {"name":"用来","value":79},
+                {"name":"馈送","value":79},
+                {"name":"列表","value":79},
+                {"name":"变化","value":79},
+                {"name":"视频","value":107},
+                {"name":"监控","value":138},
+                {"name":"结账","value":78},
+                {"name":"技术","value":83},
+                {"name":"动态分配","value":77},
+                {"name":"利用","value":140},
+                {"name":"电话号码","value":77},
+                {"name":"装置","value":354},
+                {"name":"接触","value":76},
+                {"name":"授权","value":76},
+                {"name":"货币","value":75},
+                {"name":"游戏机","value":74},
+                {"name":"游戏场","value":74},
+                {"name":"介质","value":73},
+                {"name":"整合","value":72},
+                {"name":"嵌入","value":72},
+                {"name":"金融","value":71},
+                {"name":"帐户","value":122},
+                {"name":"识别","value":121},
+                {"name":"封锁","value":70},
+                {"name":"特定","value":70},
+                {"name":"竞争","value":70},
+                {"name":"局域","value":69},
+                {"name":"相关","value":91},
+                {"name":"便于","value":67},
+                {"name":"具有","value":132},
+                {"name":"不同","value":67},
+                {"name":"处理","value":67},
+                {"name":"特性","value":67},
+                {"name":"分层","value":66},
+                {"name":"验证","value":66},
+                {"name":"概念","value":65},
+                {"name":"跨越","value":64},
+                {"name":"虚拟空间","value":64},
+                {"name":"联系","value":64},
+                {"name":"接触式","value":63},
+                {"name":"奖励","value":62},
+                {"name":"应用程序","value":85},
+                {"name":"分级","value":61},
+                {"name":"优化","value":117},
+                {"name":"护理","value":60},
+                {"name":"比如","value":59},
+                {"name":"简讯","value":59},
+                {"name":"动物","value":57},
+                {"name":"生产","value":113},
+                {"name":"乳品","value":56},
+                {"name":"信息系统","value":56},
+                {"name":"计费","value":55},
+                {"name":"机会","value":55},
+                {"name":"呈现","value":54},
+                {"name":"销售点","value":54},
+                {"name":"终端","value":54},
+                {"name":"相关性","value":54},
+                {"name":"有机","value":53},
+                {"name":"活动","value":53},
+                {"name":"创建","value":67},
+                {"name":"赞助","value":94},
+                {"name":"故事","value":53},
+                {"name":"单元","value":53},
+                {"name":"飞行器","value":102},
+                {"name":"部件","value":52},
+                {"name":"链接","value":51},
+                {"name":"安装","value":51},
+                {"name":"软件","value":125},
+                {"name":"商店","value":72},
+                {"name":"伴随","value":50},
+                {"name":"备注","value":50},
+                {"name":"交互式","value":50},
+                {"name":"幻灯片","value":50},
+                {"name":"演示","value":50},
+                {"name":"阅读","value":50},
+                {"name":"模式","value":61},
+                {"name":"经由","value":49},
+                {"name":"发现","value":49},
+                {"name":"交互","value":49},
+                {"name":"门户","value":49},
+                {"name":"社交","value":88},
+                {"name":"共享","value":96},
+                {"name":"接口","value":48},
+                {"name":"租赁","value":47},
+                {"name":"供电","value":91},
+                {"name":"日历","value":44},
+                {"name":"项上","value":44},
+                {"name":"个人","value":44},
+                {"name":"笔记","value":44},
+                {"name":"匹配","value":43},
+                {"name":"提供商","value":43},
+                {"name":"云","value":59},
+                {"name":"项目","value":68},
+                {"name":"预约","value":41},
+                {"name":"调度","value":41},
+                {"name":"推动","value":40},
+                {"name":"物理量","value":117},
+                {"name":"接收","value":98},
+                {"name":"供应","value":52},
+                {"name":"调节","value":38},
+                {"name":"吸收","value":38},
+                {"name":"产品","value":81},
+                {"name":"转换","value":38},
+                {"name":"加工","value":38},
+                {"name":"生产线","value":38},
+                {"name":"制造","value":38},
+                {"name":"参数","value":38},
+                {"name":"交通工具","value":37},
+                {"name":"例如","value":37},
+                {"name":"装配","value":37},
+                {"name":"对象","value":63},
+                {"name":"可视化","value":37},
+                {"name":"访问","value":36},
+                {"name":"诊断","value":36},
+                {"name":"计算机","value":35},
+                {"name":"网络通信","value":35},
+                {"name":"连续性","value":34},
+                {"name":"电子设备","value":33},
+                {"name":"推断","value":32},
+                {"name":"兴趣","value":32},
+                {"name":"定制","value":38},
+                {"name":"位置","value":54},
+                {"name":"组织","value":44},
+                {"name":"联网","value":30},
+                {"name":"站点","value":29},
+                {"name":"音乐","value":29},
+                {"name":"角色","value":28},
+                {"name":"独立","value":28},
+                {"name":"交换","value":39},
+                {"name":"触发","value":27},
+                {"name":"媒体","value":35},
+                {"name":"通知","value":27},
+                {"name":"管理系统","value":26},
+                {"name":"信息处理","value":50},
+                {"name":"通信","value":34},
+                {"name":"标示","value":24},
+                {"name":"解锁","value":23},
+                {"name":"补充","value":23},
+                {"name":"功能","value":23},
+                {"name":"组件","value":23},
+                {"name":"瞄准","value":22},
+                {"name":"用户界面","value":22},
+                {"name":"过滤","value":21},
+                {"name":"推销","value":21},
+                {"name":"应用","value":42},
+                {"name":"发送","value":20},
+                {"name":"电子商务系统","value":19},
+                {"name":"温室","value":18},
+                {"name":"气体","value":18},
+                {"name":"排放","value":18},
+                {"name":"环境","value":22},
+                {"name":"弹性","value":17},
+                {"name":"许可","value":17},
+                {"name":"模块化","value":16},
+                {"name":"工作","value":16},
+                {"name":"部分","value":30},
+                {"name":"导出","value":15},
+                {"name":"认证","value":14},
+                {"name":"社区","value":16},
+                {"name":"维护","value":13},
+                {"name":"材料","value":13},
+                {"name":"建模","value":12},
+                {"name":"计算机程序","value":12},
+                {"name":"侵入","value":10},
+                {"name":"建立","value":9},
+                {"name":"较佳","value":9},
+                {"name":"模态","value":9},
+                {"name":"信道","value":9},
+                {"name":"策略","value":12},
+                {"name":"联合","value":8},
+                {"name":"货币化","value":8},
+                {"name":"任意","value":7},
+                {"name":"物体","value":7},
+                {"name":"包装","value":7},
+                {"name":"游戏","value":7},
+                {"name":"特征","value":6},
+                {"name":"传送","value":6},
+                {"name":"创作","value":5},
+                {"name":"布局","value":5},
+                {"name":"聚集","value":4},
+                {"name":"框架","value":4},
+                {"name":"配送","value":3},
+                {"name":"分享","value":2},
+                {"name":"歌曲","value":1}
+            ],
+            //心形图片
+            image:"img/herat.jpg"
+        };
+        var myChart = echarts.init(document.getElementById('MDGAnaChartMain'));
+        //温馨提示：image 选取有严格要求不可过大；，否则firefox不兼容 iconfont上面的图标可以
+        var maskImage = new Image();
+        maskImage.src = data.image
+
+        maskImage.onload = function(){
+            myChart.setOption( {
+                backgroundColor:'#fff',
+                tooltip: {
+                    show: false
+                },
+                series: [{
+                    type: 'wordCloud',
+                    gridSize: 1,
+                    sizeRange: [12, 55],
+                    rotationRange: [-45, 0, 45, 90],
+                    maskImage: maskImage,
+                    textStyle: {
+                        normal: {
+                            color: function() {
+                                return 'rgb(' +
+                                    Math.round(Math.random() * 255) +
+                                    ', ' + Math.round(Math.random() * 255) +
+                                    ', ' + Math.round(Math.random() * 255) + ')'
+                            }
+                        }
+                    },
+                    left: 'center',
+                    top: 'center',
+                    // width: '96%',
+                    // height: '100%',
+                    right: null,
+                    bottom: null,
+                    // width: 300,
+                    // height: 200,
+                    // top: 20,
+                    data: data.value
+                }]
+            })
+        }
+    }
+    //高频词分析
+    function setSQRGQDmyChart() {
+        var SQRGQDmyChart = echarts.init(document.getElementById('SQRGQDAnaChartMain'));
+        SQRGQDmyChart.setOption(
+            {
+                series:[
+                    {
+                        name: '高频词：',
+                        type: 'pie',
+                        radius: '80%',
+                        center: ['50%', '50%'],
+                        data: [
+                            {value: 105, name: '交易系统'},
+                            {value: 170, name: '信息安全'},
+                            {value: 296, name: '电子邮件'},
+                            {value: 168, name: '广告创意'},
+                            {value: 150, name: '广告视觉'},
+                            {value: 370, name: '支付'},
+                            {value: 122, name: '交互式'},
+                            {value: 198, name: 'Web'},
+                            {value: 292, name: '用户服务'},
+                            {value: 214, name: '图像捕获'}
+                        ].sort(function (a, b) { return a.value - b.value; }),
+                        roseType: 'radius',
                         label: {
-                            formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                            color:'rgba(0, 0, 0, 0.5)'
                         },
-                        encode: {
-                            value: dimension,
-                            tooltip: dimension
+                        labelLine: {
+                            lineStyle: {
+                                color: 'rgba(255, 255, 255, 0.5)'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 15
+                        },
+                        itemStyle: {
+                            color: '#70DB93',
+                            shadowBlur: 100,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
                         }
                     }
-                });
+                ]
+
+            }
+        );
+        SQRGQDAnaChartMainflag = 'haveinline';
+    }
+    //申请人分析
+    function setSQQSmyChart() {
+        var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain1'));
+
+            $.ajax({
+                url: 'http://129.204.107.10:8000/importdata/getparadar',
+                type: "GET",
+                data : AnadataObjjoahu,
+                dataType : "json",
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (rel) {
+                    SQQSmyChart.setOption({
+                        // title: {
+                        //     text: '申请人分析——雷达图'
+                        // },
+                        tooltip: {},
+                        legend: {
+                            data: rel.data['chartData']['nameLabels']
+                        },
+                        radar: {
+                            // shape: 'circle',
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                        backgroundColor: '#999',
+                                        borderRadius: 3,
+                                        padding: [3, 5]
+                                }
+                            },
+                            indicator: rel.data['chartData']['indicator']
+                        },
+                        series: [{
+                            name: '预算 vs 开销（Budget vs spending）',
+                            type: 'radar',
+                            // areaStyle: {normal: {}},
+                            data:  rel.data['chartData']['series']
+                        }]
+                    });
+                    // console.log(rel.data['chartData']['nameLabels'])
+                }
+        });
+
+    }
+    //LDA主题分析
+    function setFZQSmyChart() {
+        //var FZQSmyChart = echarts.init(document.getElementById('FZQSAnaChartMain'));
+        //var FZQSmyChart = document.getElementById('FZQSAnaChartMain');
+        var team1="<img src='img/team1.png'>" ;
+        var team2="<img src='img/team2.png'>" ;
+        var team3="<img src='img/team3.png'>" ;
+        $("#FZQSAnaChartMain").html("<div style='padding-left: 30%'>"+team1+"<div/><div style='margin-top: 10px'>"+team2+"<div/><div style='margin-top: 10px'>"+team3+"<div/>");
+
+    }
+    //IPC分类分析
+    function setMBYZmyChart() {
+        var MBYZmyChart = echarts.init(document.getElementById('MBYZAnaChartMain'));
+        var data1 = [
+            {
+                "value": 2,
+                "children": [
+                    {
+                        "value": 2,
+                        "children": [
+                            {
+                                "value": 2,
+                                "children": [
+                                    {
+                                        "value": 2,
+                                        "name": "B60L11/18"
+                                    }
+                                ],
+                                "name": "B60L"
+                            }
+                        ],
+                        "name": "B60"
+                    }
+                ],
+                "name": "B"
+            },
+            {
+                "value": 165,
+                "children": [
+                    {
+                        "value": 156,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G06K7/10"
+                                    }
+                                ],
+                                "name": "G06K"
+                            },
+                            {
+                                "value": 27,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G06F7/00"
+                                    },
+                                    {
+                                        "value": 8,
+                                        "name": "G06F17/30"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F9/445"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F21/22"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F17/40"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F3/0484"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F21/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F12/14"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F19/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F3/0488"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F13/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F11/30"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F3/14"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F3/0481"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06F17/50"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F15/16"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06F17/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06F21/31"
+                                    }
+                                ],
+                                "name": "G06F"
+                            },
+                            {
+                                "value": 128,
+                                "children": [
+                                    {
+                                        "value": 5,
+                                        "name": "G06Q30/06"
+                                    },
+                                    {
+                                        "value": 3,
+                                        "name": "G06Q20/40"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q40/00"
+                                    },
+                                    {
+                                        "value": 15,
+                                        "name": "G06Q30/02"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q50/04"
+                                    },
+                                    {
+                                        "value": 33,
+                                        "name": "G06Q30/00"
+                                    },
+                                    {
+                                        "value": 6,
+                                        "name": "G06Q10/06"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06Q40/02"
+                                    },
+                                    {
+                                        "value": 3,
+                                        "name": "G06Q50/30"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06Q20/36"
+                                    },
+                                    {
+                                        "value": 5,
+                                        "name": "G06Q99/00"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06Q50/06"
+                                    },
+                                    {
+                                        "value": 4,
+                                        "name": "G06Q20/32"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06Q20/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q20/08"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q20/38"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q30/04"
+                                    },
+                                    {
+                                        "value": 3,
+                                        "name": "G06Q10/10"
+                                    },
+                                    {
+                                        "value": 3,
+                                        "name": "G06Q20/20"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q10/02"
+                                    },
+                                    {
+                                        "value": 4,
+                                        "name": "G06Q20/34"
+                                    },
+                                    {
+                                        "value": 11,
+                                        "name": "G06Q10/00"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "G06Q10/08"
+                                    },
+                                    {
+                                        "value": 10,
+                                        "name": "G06Q50/00"
+                                    },
+                                    {
+                                        "value": 6,
+                                        "name": "G06Q50/10"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G06Q10/04"
+                                    }
+                                ],
+                                "name": "G06Q"
+                            }
+                        ],
+                        "name": "G06"
+                    },
+                    {
+                        "value": 6,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G07G1/14"
+                                    }
+                                ],
+                                "name": "G07G"
+                            },
+                            {
+                                "value": 5,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G07F7/10"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G07F17/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G07F7/08"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G07F19/00"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "G07F17/16"
+                                    }
+                                ],
+                                "name": "G07F"
+                            }
+                        ],
+                        "name": "G07"
+                    },
+                    {
+                        "value": 1,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G11B27/031"
+                                    }
+                                ],
+                                "name": "G11B"
+                            }
+                        ],
+                        "name": "G11"
+                    },
+                    {
+                        "value": 1,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G01R31/36"
+                                    }
+                                ],
+                                "name": "G01R"
+                            }
+                        ],
+                        "name": "G01"
+                    },
+                    {
+                        "value": 1,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "G05B19/418"
+                                    }
+                                ],
+                                "name": "G05B"
+                            }
+                        ],
+                        "name": "G05"
+                    }
+                ],
+                "name": "G"
+            },
+            {
+                "value": 3,
+                "children": [
+                    {
+                        "value": 2,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "A01F15/14"
+                                    }
+                                ],
+                                "name": "A01F"
+                            },
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "A01K5/02"
+                                    }
+                                ],
+                                "name": "A01K"
+                            }
+                        ],
+                        "name": "A01"
+                    },
+                    {
+                        "value": 1,
+                        "children": [
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "A61F13/15"
+                                    }
+                                ],
+                                "name": "A61F"
+                            }
+                        ],
+                        "name": "A61"
+                    }
+                ],
+                "name": "A"
+            },
+            {
+                "value": 17,
+                "children": [
+                    {
+                        "value": 3,
+                        "children": [
+                            {
+                                "value": 3,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "H02J13/00"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "H02J7/00"
+                                    }
+                                ],
+                                "name": "H02J"
+                            }
+                        ],
+                        "name": "H02"
+                    },
+                    {
+                        "value": 14,
+                        "children": [
+                            {
+                                "value": 2,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "H04M1/24"
+                                    },
+                                    {
+                                        "value": 1,
+                                        "name": "H04M15/00"
+                                    }
+                                ],
+                                "name": "H04M"
+                            },
+                            {
+                                "value": 7,
+                                "children": [
+                                    {
+                                        "value": 2,
+                                        "name": "H04L12/58"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "H04L29/06"
+                                    },
+                                    {
+                                        "value": 3,
+                                        "name": "H04L29/08"
+                                    }
+                                ],
+                                "name": "H04L"
+                            },
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "H04N7/18"
+                                    }
+                                ],
+                                "name": "H04N"
+                            },
+                            {
+                                "value": 3,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "H04W24/00"
+                                    },
+                                    {
+                                        "value": 2,
+                                        "name": "H04W4/02"
+                                    }
+                                ],
+                                "name": "H04W"
+                            },
+                            {
+                                "value": 1,
+                                "children": [
+                                    {
+                                        "value": 1,
+                                        "name": "H04B3/54"
+                                    }
+                                ],
+                                "name": "H04B"
+                            }
+                        ],
+                        "name": "H04"
+                    }
+                ],
+                "name": "H"
+            }
+        ]
+        MBYZmyChart.setOption( {
+            visualMap: {
+                type: 'continuous',
+                min: 0,
+                max: 10,
+                inRange: {
+                    color: ['#2D5F73', '#538EA6', '#F2D1B3', '#F2B8A2', '#F28C8C']
+                }
+            },
+            series: {
+                type: 'sunburst',
+                data: data1,
+                radius: [0, '90%'],
+                label: {
+                    rotate: 'radial'
+                }
             }
         });
-        MDGmyChart.setOption({
+        MBYZAnaChartMainflag = 'haveinline';
+    }
+    //申请量变化趋势
+    function setTZZLmyChart() {
+        var TZZLmyChart = echarts.init(document.getElementById('TZZLAnaChartMain'));
+        // window.location.href="http://129.204.107.10:8000/static/piechart.html"
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "http://129.204.107.10:8000/pie/",
+            dataType: "json",
+            success: function (results) {
+
+                // 指定图表的配置项和数据
+                option = {
+                    backgroundColor: '#2c343c',
+
+                    title: {
+                        text: 'ALL Companies',
+                        left: 'center',
+                        top: 30,
+                        textStyle: {
+                            color: '#ccc',
+                            fontSize: 20
+                        }
+                    },
+
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+
+                    visualMap: {
+                        show: false,
+                        min: 5,
+                        max: 20,
+                        inRange: {
+                            colorLightness: [0, 1]
+                        }
+                    },
+                    series: [
+                        {
+                            name: '公司',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '50%'],
+                            data: results.sort(function (a, b) {
+                                return a.value - b.value;
+                            }),
+                            roseType: 'radius',
+                            label: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            },
+                            labelLine: {
+                                lineStyle: {
+                                    color: 'rgba(255, 255, 255, 0.3)'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            },
+                            itemStyle: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            },
+
+                            animationType: 'scale',
+                            animationEasing: 'elasticOut',
+                            animationDelay: function (idx) {
+                                return Math.random() * 200;
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                TZZLmyChart.setOption(option);
+            },
+            error: function (error) {
+                alert("fail")
+            }
+
+        });
+    }
+    //公司专利数量分析
+    function setLYGmyChart() {
+        window.location.href="http://129.204.107.10:8000/static/punchCard.html"
+    }
+    // 前8申请人分析
+    function setIFLmyChart() {
+        var IFLmyChart = echarts.init(document.getElementById('IFLAnaChartMain'));
+        ILFoption = {
             legend: {},
             tooltip: {
                 trigger: 'axis',
@@ -317,17 +1355,27 @@
             },
             dataset: {
                 source: [
-                    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-                    ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-                    ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-                    ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-                    ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+                    ['Year', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015'],
+                    ['all', 1, 0, 0, 0, 2, 4, 9, 8, 2, 3, 2, 6, 9, 1, 8, 10, 6, 5],
+                    ['GOOGLE公司', 0, 0, 0, 0, 0, 3, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    ['微软公司', 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 1, 4, 1, 0, 2, 3, 0, 0],
+                    [' 谷歌公司', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1, 1, 2, 2, 0],
+                    ['NCR公司', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 2, 3],
+                    ['苹果公司', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 0, 0, 2],
+                    ['索尼公司', 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 1, 1, 0],
+                    ['波音公司', 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+                    ['雅虎公司', 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0]
                 ]
             },
             xAxis: {type: 'category'},
             yAxis: {gridIndex: 0},
             grid: {top: '55%'},
             series: [
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
                 {type: 'line', smooth: true, seriesLayoutBy: 'row'},
                 {type: 'line', smooth: true, seriesLayoutBy: 'row'},
                 {type: 'line', smooth: true, seriesLayoutBy: 'row'},
@@ -341,343 +1389,48 @@
                         formatter: '{b}: {@2012} ({d}%)'
                     },
                     encode: {
-                        itemName: 'product',
+                        itemName: 'Year',
                         value: '2012',
                         tooltip: '2012'
                     }
                 }
             ]
-        });
-        MDGAnaChartMainflag = 'haveinline';
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
+        };
+        IFLmyChart.setOption(ILFoption)
+        IFLAnaChartMainflag = 'haveinline';
+        // });
+    }
+    //top5申请量
+    function setGQDmyChart() {
+        var GQDmyChart = echarts.init(document.getElementById('GQDAnaChartMain'));
+        GQDoption = {
+            xAxis: {
+                type: 'category',
+                data: ['谷歌公司', '微软公司', 'NCR公司', '索尼公司', '苹果公司', '波音公司', '雅虎公司', 'CAN科技公司', '嘉吉公司', 'IGT公司']
+
             },
-            success: function (rel){
-                if(rel.data.code)
-                {
-                    MDGmyChart.setOption({
-                        series: [{
-                            type: 'treemap',
-                            data: response.data.data.seriesdata
-                        }]
-                    });
-                    MDGAnaChartMainflag = 'haveinline';
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [29, 15, 9, 7, 7, 5, 4, 2, 2, 2],
+                type: 'line',
+                symbol: 'triangle',
+                symbolSize: 20,
+                lineStyle: {
+                    color: 'green',
+                    width: 4,
+                    type: 'dashed'
+                },
+                itemStyle: {
+                    borderWidth: 3,
+                    borderColor: 'yellow',
+                    color: 'blue'
                 }
-        }
-        });
-    }
-
-
-    function setSQRGQDmyChart() {
-        var SQRGQDmyChart = echarts.init(document.getElementById('SQRGQDAnaChartMain'));
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (rel) {
-                SQRGQDmyChart.setOption({
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'line',
-                            lineStyle: {
-                                color: 'rgba(0,0,0,0.2)',
-                                width: 1,
-                                type: 'solid'
-                            }
-                        }
-                    },
-                    legend: {
-                        data: rel.data["legenddata"]
-
-                    },
-                    singleAxis: {
-                        top: 50,
-                        bottom: 50,
-                        axisTick: {},
-                        axisLabel: {},
-                        type: 'time',
-                        axisPointer: {
-                            animation: true,
-                            label: {
-                                show: true
-                            }
-                        },
-                        splitLine: {
-                            show: true,
-                            lineStyle: {
-                                type: 'dashed',
-                                opacity: 0.2
-                            }
-                        }
-                    },
-                    series: [
-                        {
-                            type: 'themeRiver',
-                            emphasis: {
-                                itemStyle: {
-                                    shadowBlur: 20,
-                                    shadowColor: 'rgba(0, 0, 0, 0.8)'
-                                }
-                            },
-                            data: rel.data["seriesdata"]
-                        }
-                    ]
-                });
-                SQRGQDAnaChartMainflag = 'haveinline';
-            }
-        });
-    }
-
-    function setSQQSmyChart() {
-        var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain'));
-        SQQSmyChart.setOption({
-            series: {
-                type: 'sunburst',
-                // highlightPolicy: 'ancestor',
-                data: [{
-                    name: 'Grandpa',
-                    children: [{
-                        name: 'Uncle Leo',
-                        value: 15,
-                        children: [{
-                            name: 'Cousin Jack',
-                            value: 2
-                        }, {
-                            name: 'Cousin Mary',
-                            value: 5,
-                            children: [{
-                                name: 'Jackson',
-                                value: 2
-                            }]
-                        }, {
-                            name: 'Cousin Ben',
-                            value: 4
-                        }]
-                    }, {
-                        name: 'Father',
-                        value: 10,
-                        children: [{
-                            name: 'Me',
-                            value: 5
-                        }, {
-                            name: 'Brother Peter',
-                            value: 1
-                        }]
-                    }]
-                }, {
-                    name: 'Nancy',
-                    children: [{
-                        name: 'Uncle Nike',
-                        children: [{
-                            name: 'Cousin Betty',
-                            value: 1
-                        }, {
-                            name: 'Cousin Jenny',
-                            value: 2
-                        }]
-                    }]
-                }],
-                radius: [0, '90%'],
-                label: {
-                    rotate: 'radial'
-                }
-            }
-        });
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (rel) {
-                // SQQSmyChart.hideLoading();
-                SQQSmyChart.setOption({
-                    backgroundColor: '#0f375f',
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    legend: {
-                        data: ['全球专利申请数量', '全球申请人数量' , '在华专利申请量'],
-                        textStyle: {
-                            color: '#ccc'
-                        }
-                    },
-                    xAxis: {
-                        data: rel.data['Chart_x1_data'],
-                        axisLine: {
-                            lineStyle: {
-                                color: '#ccc'
-                            }
-                        }
-                    },
-                    yAxis: {
-                        splitLine: {show: false},
-                        axisLine: {
-                            lineStyle: {
-                                color: '#ccc'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: '全球专利申请数量',
-                        type: 'line',
-                        smooth: true,
-                        showAllSymbol: true,
-                        symbol: 'emptyCircle',
-                        symbolSize: 15,
-                        data: rel.data['Global_patent_applications_data']
-                    },{
-                        name: '在华专利申请量',
-                        type: 'line',
-                        smooth: true,
-                        showAllSymbol: true,
-                        symbol: 'emptyCircle',
-                        symbolSize: 15,
-                        data: rel.data['Chinese_patent_applications_data']
-                    },{
-                        name: '全球申请人数量',
-                        type: 'bar',
-                        barWidth: 10,
-                        itemStyle: {
-                            barBorderRadius: 5,
-                            color: new echarts.graphic.LinearGradient(
-                                0, 0, 0, 1,
-                                [
-                                    {offset: 0, color: '#14c8d4'},
-                                    {offset: 1, color: '#43eec6'}
-                                ]
-                            )
-                        },
-                        data: rel.data['Number_of_applicants_worldwide_data']
-                    }, {
-                        name: '全球专利申请数量',
-                        type: 'bar',
-                        barGap: '-100%',
-                        barWidth: 10,
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(
-                                0, 0, 0, 1,
-                                [
-                                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
-                                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
-                                    {offset: 1, color: 'rgba(20,200,212,0)'}
-                                ]
-                            )
-                        },
-                        z: -12,
-                        data: rel.data['Global_patent_applications_data']
-                    }, {
-                        name: '全球专利申请数量',
-                        type: 'pictorialBar',
-                        symbol: 'rect',
-                        itemStyle: {
-                            color: '#0f375f'
-                        },
-                        symbolRepeat: true,
-                        symbolSize: [12, 4],
-                        symbolMargin: 1,
-                        z: -10,
-                        data: rel.data['Global_patent_applications_data']
-                    }]
-                });
-                SQQSAnaChartMainflag = 'haveinline';
-            }
-    });
-    }
-
-    function setFZQSmyChart() {
-        var FZQSmyChart = echarts.init(document.getElementById('FZQSAnaChartMain'));
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (rel) {
-                console.log(rel.data[0][1]);
-
-                FZQSoption = {
-                    title: {
-                        text: '分析结果'
-                    },
-                    legend: {},
-                    tooltip: {
-                        trigger: 'axis',
-                        showContent: false
-                    },
-                    dataset: {
-                        source: rel.data
-                    },
-                    xAxis: {type: 'category'},
-                    yAxis: {gridIndex: 0},
-                    grid: {top: '33%'},
-                    series: [
-                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                        {
-                            type: 'pie',
-                            id: 'pie',
-                            radius: '20%',
-                            center: ['50%', '18%'],
-                            label: {
-                                formatter: '{b}: {@ rel.data[0][1]} ({d}%)'
-                            },
-                            encode: {
-                                itemName: 'product',
-                                // value: "2012",
-                                // tooltip: "2012"
-                                value: rel.data[0][1],
-                                tooltip: rel.data[0][1]
-                            }
-                        }
-                    ]
-                };
-                FZQSmyChart.on('updateAxisPointer', function (event) {
-                    var xAxisInfo = event.axesInfo[0];
-                    if (xAxisInfo) {
-                        var dimension = xAxisInfo.value + 1;
-                        FZQSmyChart.setOption({
-                            series: {
-                                id: 'pie',
-                                label: {
-                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
-                                },
-                                encode: {
-                                    value: dimension,
-                                    tooltip: dimension
-                                }
-                            }
-                        });
-                    }
-                });
-                FZQSmyChart.setOption(FZQSoption);
-                FZQSAnaChartMainflag = 'haveinline';
-            }
-        });
+            }]
+        };
+        GQDmyChart.setOption(GQDoption);
+        GQDAnaChartMainflag = 'haveinline';
     }
 </script>
 </html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>专利分析可视化</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <style type="text/css">
+        .leftp {
+            padding: 3px 5px;
+            overflow: hidden;
+            cursor: pointer;
+            display: block;
+        }
+        .leftanabutt{
+            background:transparent;	/*按钮背景透明*/
+            border-width:0px;	/*边框透明*/
+            outline:none;	/*点击后没边框*/
+        }
+        .leftanabutt:hover{
+            font-weight: bold;
+            color: #ff4d6b;
+        }
+    </style>
+</head>
+<body style="background-color: #ecf0f4;">
+<div style="overflow: hidden;">
+    <div>
+        <div class="content-wrapper" style=" height: 80%">
+            <div class="row">
+                <div class="card" style="width: 20%">
+                    <div class="card-body">
+                        <h4 class="card-title">分析方法</h4>
+                        <div style="padding: 20px 0px 20px 0px;">
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请人分析——雷达图','SQQS',this)">申请人分析——雷达图</button></p>
+
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('IPC分类分析——旭日图','MBYZ',this)">IPC分类分析——旭日图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高频词——词云图','FZQS',this)">高频词——词云图</button></p>
+
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('目标专利来源国分析','LYG',this)">词云</button></p>-->
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利来源国分析','MDG',this)">专利来源国分析</button></p>
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('IPC分类分析','IFL',this)">IPC分类分析</button></p>-->
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利图景分析','ZLTJ',this)">专利图景分析</button></p>-->
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高强度专利分析','GQD',this)">高强度专利分析</button></p>-->
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请人高强度分析','SQRGQD',this)">申请人高强度分析</button></p>
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('同族专利分析','TZZL',this)">领域内聚类分析</button></p>-->
+                        </div>
+                    </div>
+                </div>
+                <!--                </div>-->
+                <!--                <div class="col-lg-9 stretch-card">-->
+                <div class="card" style="width: 80%">
+                    <div class="card-body">
+                        <!--                            <h4 class="h4">分析结果</h4>-->
+                        <!--                            <p class="card-description"> Analysis Results</p>-->
+                        <div id="SQQSAnaChartMain" style="width: 100%;height: 100%; ">
+                            <div id="SQQSAnaChartMain1" style="width: 80%;height: 100%; float:right;"> </div>
+
+                            <div style="width: 20%; float:left;">
+                                <div style="margin-bottom: 5px;">
+                                    <h3>交互：指定申请人</h3>
+                                    <input type="button" value="进行分析" onclick="newananlyse()" />
+                                </div>
+                                <input type="checkbox" id="boxid" onclick="setAllNo()" />全选/全不选<br />
+                               <input type="checkbox" name="love" value="pa1" />GOOGLE公司<br />
+                               <input type="checkbox" name="love" value="pa2" />微软公司<br />
+                               <input type="checkbox" name="love" value="pa3" />谷歌公司<br />
+                               <input type="checkbox" name="love" value="pa4" />NCR公司<br />
+                               <input type="checkbox" name="love" value="pa5" />苹果公司<br />
+                               <input type="checkbox" name="love" value="pa6" />波音公司<br />
+                               <input type="checkbox" name="love" value="pa7" />雅虎公司<br />
+                           </div>
+
+                        </div>
+                        <div id="FZQSAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="MBYZAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="TZZLAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="LYGAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="MDGAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="IFLAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="ZLTJAnaChartMain" style="width: 0;height: 0;  "> </div>
+                        <div id="GQDAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="SQRGQDAnaChartMain" style="width: 0;height: 0;  "> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="jquery-3.5.1.min.js" language="JavaScript"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<!--<script src="layui/layui.js"></script>-->
+<script src="base64.min.js"></script>
+<!--<script src="js/config.js"></script>-->
+<!--<script src="echarts.js"></script>-->
+<script type="text/javascript">
+    var SQQSAnaChartMainflag = 'none';
+    var FZQSAnaChartMainflag = 'none';
+    var MBYZAnaChartMainflag = 'none';
+    var TZZLAnaChartMainflag = 'none';
+    var LYGAnaChartMainflag = 'none';
+    var MDGAnaChartMainflag = 'none';
+    var IFLAnaChartMainflag = 'none';
+    var ZLTJAnaChartMainflag = 'none';
+    var GQDAnaChartMainflag = 'none';
+    var SQRGQDAnaChartMainflag = 'none';
+
+
+    var AnadataObj = new Object();
+
+    //全选函数
+    function setAll() {
+        var loves = document.getElementsByName("love");
+        for (var i = 0; i < loves.length; i++) {
+            loves[i].checked = true;
+        }
+    }
+    //全不选函数
+    function setNo() {
+        var loves = document.getElementsByName("love");
+        for (var i = 0; i < loves.length; i++) {
+            loves[i].checked = false;
+        }
+    }
+    //反选
+    function setOthers() {
+        var loves = document.getElementsByName("love");
+        for (var i = 0; i < loves.length; i++) {
+            if (loves[i].checked === false)
+                loves[i].checked = true;
+            else
+                loves[i].checked = false;
+        }
+    }
+    //全选/全不选操作
+    function setAllNo(){
+        var box = document.getElementById("boxid");
+        var loves = document.getElementsByName("love");
+        if(box.checked == false){
+            for (var i = 0; i < loves.length; i++) {
+                loves[i].checked = false;
+            }
+        }
+        else{
+            for (var i = 0; i < loves.length; i++) {
+                loves[i].checked = true;
+            }
+        }
+    }
+    AnadataObj = {
+        // anakeyword: AnaKeyWords,
+        ananame: '目标专利全球申请趋势分析',
+        anacode : 'SQQS',
+    };
+    toAnalyse($(".leftanabutt:first"));
+
+    function newananlyse() {
+        var arr = [];
+        $(".likes input:checkbox[name='love']:checked").each(function(i){
+            arr.push($(this).val());
+        });
+
+    }
+    //添加分析信息，调用发送请求
+    function getAnaCharts(AnaChartName,AnaChartCode,obj) {
+        // AnadataObj.ananame = AnaChartName;
+        AnadataObj.anacode = AnaChartCode;
+        toAnalyse(obj);
+    }
+
+    //发送分析请求，进行分析
+    function toAnalyse(obj) {
+        //改变点击的按钮颜色
+        changebuttcolor(obj);
+        switch (AnadataObj.anacode) {
+            case "SQQS":
+                if (SQQSAnaChartMainflag === 'haveinline') {
+                    chartshowchange('SQQSAnaChartMain');
+                    break;
+                }
+                //隐藏其他图表div，显示本图表div
+                chartshowchange('SQQSAnaChartMain');
+
+                setSQQSmyChart();
+                break;
+            case 'FZQS':
+                if (FZQSAnaChartMainflag === 'haveinline') {
+                    chartshowchange('FZQSAnaChartMain');
+                    break;
+                }
+                chartshowchange('FZQSAnaChartMain');
+                setFZQSmyChart();
+                break;
+            case 'MBYZ':
+                if (MBYZAnaChartMainflag === 'haveinline') {
+                    chartshowchange('MBYZAnaChartMain');
+                    break;
+                }
+                chartshowchange('MBYZAnaChartMain');
+                // setMBYZmyChart();
+
+                break;
+            case 'TZZL':
+                //聚类分析
+                if (TZZLAnaChartMainflag === 'haveinline') {
+                    chartshowchange('TZZLAnaChartMain');
+                    break;
+                }
+                chartshowchange('TZZLAnaChartMain');
+                var TZZLmyChart = echarts.init(document.getElementById('TZZLAnaChartMain'));
+                TZZLAnaChartMainflag = 'haveinline';
+                break;
+            // # 'SQQS','FZQS', 'MBYZ','TZZL','LYG','MDG','IFL','ZLTJ','GQD','SQRGQD',
+            case 'LYG':
+                if (LYGAnaChartMainflag === 'haveinline') {
+                    chartshowchange('LYGAnaChartMain');
+                    break;
+                }
+                chartshowchange('LYGAnaChartMain');
+                var LYGmyChart = echarts.init(document.getElementById('LYGAnaChartMain'));
+                LYGAnaChartMainflag = 'haveinline';
+                break;
+            case 'MDG':
+                if (MDGAnaChartMainflag === 'haveinline') {
+                    chartshowchange('MDGAnaChartMain');
+                    break;
+                }
+
+                chartshowchange('MDGAnaChartMain');
+
+                setMDGmyChart();
+                break;
+            case 'IFL':
+                if (IFLAnaChartMainflag === 'haveinline') {
+                    chartshowchange('IFLAnaChartMain');
+                    break;
+                }
+                chartshowchange('IFLAnaChartMain');
+                var IFLmyChart = echarts.init(document.getElementById('IFLAnaChartMain'));
+                IFLAnaChartMainflag = 'haveinline';
+                break;
+            case 'ZLTJ':
+                if (ZLTJAnaChartMainflag === 'haveinline') {
+                    chartshowchange('ZLTJAnaChartMain');
+                    break;
+                }
+                chartshowchange('ZLTJAnaChartMain');
+                var ZLTJmyChart = echarts.init(document.getElementById('ZLTJAnaChartMain'));
+                ZLTJAnaChartMainflag = 'haveinline';
+                break;
+            case 'GQD':
+                if (GQDAnaChartMainflag === 'haveinline') {
+                    chartshowchange('GQDAnaChartMain');
+                    break;
+                }
+                chartshowchange('GQDAnaChartMain');
+                var GQDmyChart = echarts.init(document.getElementById('GQDAnaChartMain'));
+                GQDAnaChartMainflag = 'haveinline';
+                break;
+            case 'SQRGQD':
+                if (SQRGQDAnaChartMainflag === 'haveinline') {
+                    chartshowchange('SQRGQDAnaChartMain');
+                    break;
+                }
+                chartshowchange('SQRGQDAnaChartMain');
+                setSQRGQDmyChart();
+                break;
+            default:
+                sq.msg('请选择正确的分析算法');
+                break;
+        }
+    }
+
+    function refrashhtneir(){
+        refrashchartflagzhuang();
+    }
+    function refrashchartflagzhuang(){
+        SQQSAnaChartMainflag = 'none';
+        FZQSAnaChartMainflag = 'none';
+        MBYZAnaChartMainflag = 'none';
+        TZZLAnaChartMainflag = 'none';
+        LYGAnaChartMainflag = 'none';
+        MDGAnaChartMainflag = 'none';
+        IFLAnaChartMainflag = 'none';
+        ZLTJAnaChartMainflag = 'none';
+        GQDAnaChartMainflag = 'none';
+        SQRGQDAnaChartMainflag = 'none';
+    }
+
+    //鼠标滑过变色，如果不是点击的那个按钮就变色
+    $(".leftanabutt:button").hover(function () {
+        var lincolor  = rgb2hex($(this).css("color"));
+        if (lincolor !== "#ff4d6b"){
+            // console.log(lincolor);
+            $(this).css({
+                "font-weight":"bold",
+                "color":"#eb4762"
+            })
+        }
+
+    },function() {
+        var lincolor  = rgb2hex($(this).css("color"));
+        // console.log("gaibian2:"+lincolor);
+        if (lincolor === "#eb4762") {
+
+            $(this).css({
+                "font-weight": "normal",
+                "color": "#000000"
+            });
+        }
+    });
+    //RGB转16进制
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        function hex(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+    //点击变色
+    function changebuttcolor(obj){
+        $(".leftanabutt").css({
+            "font-weight":"normal",
+            "color":"#000000"
+        });
+        $(obj).css({
+            "font-weight":"bold",
+            "color":"#ff4d6b"
+        });
+    }
+    //图表切换
+    function chartshowchange(obj) {
+        chartshowchangestyle('SQQSAnaChartMain');
+        chartshowchangestyle('FZQSAnaChartMain');
+        chartshowchangestyle('MBYZAnaChartMain');
+        chartshowchangestyle('TZZLAnaChartMain');
+        chartshowchangestyle('LYGAnaChartMain');
+        chartshowchangestyle('MDGAnaChartMain');
+        chartshowchangestyle('IFLAnaChartMain');
+        chartshowchangestyle('ZLTJAnaChartMain');
+        chartshowchangestyle('GQDAnaChartMain');
+        chartshowchangestyle('SQRGQDAnaChartMain');
+        $('#'+obj).css({
+            "display":"block",
+            "width": "100%",
+            "height":"100%",
+        });
+    }
+
+    function chartshowchangestyle(obj) {
+        $('#'+obj).css({
+            "display":"none",
+            "width": "0",
+            "height":"0",
+        });
+    }
+    function setMDGmyChart() {
+        var MDGmyChart = echarts.init(document.getElementById('MDGAnaChartMain'));
+        MDGmyChart.on('updateAxisPointer', function (event) {
+            var xAxisInfo = event.axesInfo[0];
+            if (xAxisInfo) {
+                var dimension = xAxisInfo.value + 1;
+                myChart.setOption({
+                    series: {
+                        id: 'pie',
+                        label: {
+                            formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                        },
+                        encode: {
+                            value: dimension,
+                            tooltip: dimension
+                        }
+                    }
+                });
+            }
+        });
+        MDGmyChart.setOption({
+            legend: {},
+            tooltip: {
+                trigger: 'axis',
+                showContent: false
+            },
+            dataset: {
+                source: [
+                    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
+                    ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+                    ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+                    ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+                    ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {gridIndex: 0},
+            grid: {top: '55%'},
+            series: [
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '30%',
+                    center: ['50%', '25%'],
+                    label: {
+                        formatter: '{b}: {@2012} ({d}%)'
+                    },
+                    encode: {
+                        itemName: 'product',
+                        value: '2012',
+                        tooltip: '2012'
+                    }
+                }
+            ]
+        });
+        MDGAnaChartMainflag = 'haveinline';
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel){
+                if(rel.data.code)
+                {
+                    MDGmyChart.setOption({
+                        series: [{
+                            type: 'treemap',
+                            data: response.data.data.seriesdata
+                        }]
+                    });
+                    MDGAnaChartMainflag = 'haveinline';
+                }
+        }
+        });
+    }
+
+
+    function setSQRGQDmyChart() {
+        var SQRGQDmyChart = echarts.init(document.getElementById('SQRGQDAnaChartMain'));
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
+                SQRGQDmyChart.setOption({
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'line',
+                            lineStyle: {
+                                color: 'rgba(0,0,0,0.2)',
+                                width: 1,
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    legend: {
+                        data: rel.data["legenddata"]
+
+                    },
+                    singleAxis: {
+                        top: 50,
+                        bottom: 50,
+                        axisTick: {},
+                        axisLabel: {},
+                        type: 'time',
+                        axisPointer: {
+                            animation: true,
+                            label: {
+                                show: true
+                            }
+                        },
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                type: 'dashed',
+                                opacity: 0.2
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'themeRiver',
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 20,
+                                    shadowColor: 'rgba(0, 0, 0, 0.8)'
+                                }
+                            },
+                            data: rel.data["seriesdata"]
+                        }
+                    ]
+                });
+                SQRGQDAnaChartMainflag = 'haveinline';
+            }
+        });
+    }
+
+    function setSQQSmyChart() {
+        var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain1'));
+        // SQQSmyChart.setOption({
+        //     series: {
+        //         type: 'sunburst',
+        //         // highlightPolicy: 'ancestor',
+        //         data: [{
+        //             name: 'Grandpa',
+        //             children: [{
+        //                 name: 'Uncle Leo',
+        //                 value: 15,
+        //                 children: [{
+        //                     name: 'Cousin Jack',
+        //                     value: 2
+        //                 }, {
+        //                     name: 'Cousin Mary',
+        //                     value: 5,
+        //                     children: [{
+        //                         name: 'Jackson',
+        //                         value: 2
+        //                     }]
+        //                 }, {
+        //                     name: 'Cousin Ben',
+        //                     value: 4
+        //                 }]
+        //             }, {
+        //                 name: 'Father',
+        //                 value: 10,
+        //                 children: [{
+        //                     name: 'Me',
+        //                     value: 5
+        //                 }, {
+        //                     name: 'Brother Peter',
+        //                     value: 1
+        //                 }]
+        //             }]
+        //         }, {
+        //             name: 'Nancy',
+        //             children: [{
+        //                 name: 'Uncle Nike',
+        //                 children: [{
+        //                     name: 'Cousin Betty',
+        //                     value: 1
+        //                 }, {
+        //                     name: 'Cousin Jenny',
+        //                     value: 2
+        //                 }]
+        //             }]
+        //         }],
+        //         radius: [0, '90%'],
+        //         label: {
+        //             rotate: 'radial'
+        //         }
+        //     }
+        // });
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "http://129.204.107.10:8000/punch/",
+            dataType: "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (results) {
+                var hours = ['1998', '1999', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015'];
+                var days = ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                var data = results;
+                option = {
+                    title: {
+                        text: 'Year of patent filing',
+                    },
+                    legend: {
+                        data: ['Punch Card'],
+                        left: 'right'
+                    },
+                    polar: {},
+                    tooltip: {
+                        formatter: function (params) {
+                            return params.value[2] + ' commits in ' + hours[params.value[1]] + ' of ' + days[params.value[0]];
+                        }
+                    },
+                    angleAxis: {
+                        type: 'category',
+                        data: hours,
+                        boundaryGap: false,
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                color: '#999',
+                                type: 'dashed'
+                            }
+                        },
+                        axisLine: {
+                            show: false
+                        }
+                    },
+                    radiusAxis: {
+                        type: 'category',
+                        data: days,
+                        axisLine: {
+                            show: false
+                        },
+                        axisLabel: {
+                            rotate: 45
+                        }
+                    },
+                    series: [{
+                        name: 'Punch Card',
+                        type: 'scatter',
+                        coordinateSystem: 'polar',
+                        symbolSize: function (val) {
+                            return val[2] * 15;
+                        },
+                        data: data,
+                        animationDelay: function (idx) {
+                            return idx * 5;
+                        }
+                    }]
+                };
+                if (option && typeof option === "object") {
+                    SQQSmyChart.setOption(option, true);
+                }
+                SQQSAnaChartMainflag = 'haveinline';
+
+            }, error: function (msg) {
+                console.log(mag)
+            }
+        })
+    }
+
+    function setFZQSmyChart() {
+        var FZQSmyChart = echarts.init(document.getElementById('FZQSAnaChartMain'));
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
+                console.log(rel.data[0][1]);
+
+                FZQSoption = {
+                    title: {
+                        text: '分析结果'
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: rel.data
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {gridIndex: 0},
+                    grid: {top: '33%'},
+                    series: [
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {
+                            type: 'pie',
+                            id: 'pie',
+                            radius: '20%',
+                            center: ['50%', '18%'],
+                            label: {
+                                formatter: '{b}: {@ rel.data[0][1]} ({d}%)'
+                            },
+                            encode: {
+                                itemName: 'product',
+                                // value: "2012",
+                                // tooltip: "2012"
+                                value: rel.data[0][1],
+                                tooltip: rel.data[0][1]
+                            }
+                        }
+                    ]
+                };
+                FZQSmyChart.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        FZQSmyChart.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+                FZQSmyChart.setOption(FZQSoption);
+                FZQSAnaChartMainflag = 'haveinline';
+            }
+        });
+    }
+</script>
+</html>
