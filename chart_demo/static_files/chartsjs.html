@@ -132,7 +132,7 @@
                     break;
                 }
                 chartshowchange('MBYZAnaChartMain');
-                setMBYZmyChart();
+                // setMBYZmyChart();
 
                 break;
             case 'TZZL':
@@ -289,8 +289,33 @@
     }
     function setMDGmyChart() {
         var MDGmyChart = echarts.init(document.getElementById('MDGAnaChartMain'));
-        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
-            .sucessFun(function (rel) {
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
+                // result = JSON.parse(result);
+                // console.log(result.status);
+                if (result.status === '1') {
+                    console.log(rel);
+                }
+            },
+        });
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
                 MDGmyChart.setOption({
                     series: [{
                         type: 'treemap',
@@ -298,14 +323,23 @@
                     }]
                 });
                 MDGAnaChartMainflag = 'haveinline';
-            }).run();
+            }
+        });
     }
 
 
     function setSQRGQDmyChart() {
         var SQRGQDmyChart = echarts.init(document.getElementById('SQRGQDAnaChartMain'));
-        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
-            .sucessFun(function (rel) {
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
                 SQRGQDmyChart.setOption({
                     tooltip: {
                         trigger: 'axis',
@@ -356,13 +390,22 @@
                     ]
                 });
                 SQRGQDAnaChartMainflag = 'haveinline';
-            }).run();
+            }
+        });
     }
 
     function setSQQSmyChart() {
         var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain'));
-        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
-            .sucessFun(function (rel) {
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel) {
                 // SQQSmyChart.hideLoading();
                 SQQSmyChart.setOption({
                     backgroundColor: '#0f375f',
@@ -457,44 +500,22 @@
                     }]
                 });
                 SQQSAnaChartMainflag = 'haveinline';
-            }).run();
+            }
+    });
     }
 
     function setFZQSmyChart() {
         var FZQSmyChart = echarts.init(document.getElementById('FZQSAnaChartMain'));
         $.ajax({
-            url: this.url+this._your_api,
-            type : "POST",
-            data : this._data,
-            async:true,
-            dataType : "JSON",
-            xhrFields   : {withCredentials: true},
-            success: function(result){
-                console.log("sucess!!!!!");
-                // layer.close(load1);
-                // console.log('res, res.status', result)
-                switch (parseInt(result.status)){
-                    case 0 :
-                        sq.msg(result.msg);
-                        break;
-                    case 1 :
-                        sq._fun(result);
-                        break;
-                    default :
-                        //console.log(result);
-                        console.log("未知status！");
-                        break;
-
-                }
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
             },
-            error:function (xhr){
-                // layer.close(load1);
-                console.log(xhr);
-                sq._error();
-            }
-        });
-        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
-            .sucessFun(function (rel) {
+            success: function (rel) {
                 console.log(rel.data[0][1]);
 
                 FZQSoption = {
@@ -556,7 +577,8 @@
                 });
                 FZQSmyChart.setOption(FZQSoption);
                 FZQSAnaChartMainflag = 'haveinline';
-            }).run();
+            }
+        });
     }
 </script>
 </html>
