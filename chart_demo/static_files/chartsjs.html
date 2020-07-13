@@ -289,41 +289,85 @@
     }
     function setMDGmyChart() {
         var MDGmyChart = echarts.init(document.getElementById('MDGAnaChartMain'));
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (rel) {
-                // result = JSON.parse(result);
-                // console.log(result.status);
-                if (result.status === '1') {
-                    console.log(rel);
-                }
-            },
-        });
-        $.ajax({
-            url: 'http://172.21.201.141:8000/getUserImage',
-            type: "GET",
-            // data : opinion,
-            // dataType : "json",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (rel) {
-                MDGmyChart.setOption({
-                    series: [{
-                        type: 'treemap',
-                        data: rel.data
-                    }]
+        MDGmyChart.on('updateAxisPointer', function (event) {
+            var xAxisInfo = event.axesInfo[0];
+            if (xAxisInfo) {
+                var dimension = xAxisInfo.value + 1;
+                myChart.setOption({
+                    series: {
+                        id: 'pie',
+                        label: {
+                            formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                        },
+                        encode: {
+                            value: dimension,
+                            tooltip: dimension
+                        }
+                    }
                 });
-                MDGAnaChartMainflag = 'haveinline';
             }
+        });
+        MDGmyChart.setOption({
+            legend: {},
+            tooltip: {
+                trigger: 'axis',
+                showContent: false
+            },
+            dataset: {
+                source: [
+                    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
+                    ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+                    ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
+                    ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
+                    ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {gridIndex: 0},
+            grid: {top: '55%'},
+            series: [
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                {
+                    type: 'pie',
+                    id: 'pie',
+                    radius: '30%',
+                    center: ['50%', '25%'],
+                    label: {
+                        formatter: '{b}: {@2012} ({d}%)'
+                    },
+                    encode: {
+                        itemName: 'product',
+                        value: '2012',
+                        tooltip: '2012'
+                    }
+                }
+            ]
+        });
+        MDGAnaChartMainflag = 'haveinline';
+        $.ajax({
+            url: 'http://172.21.201.141:8000/getUserImage',
+            type: "GET",
+            // data : opinion,
+            // dataType : "json",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (rel){
+                if(rel.data.code)
+                {
+                    MDGmyChart.setOption({
+                        series: [{
+                            type: 'treemap',
+                            data: response.data.data.seriesdata
+                        }]
+                    });
+                    MDGAnaChartMainflag = 'haveinline';
+                }
+        }
         });
     }
 
@@ -396,6 +440,59 @@
 
     function setSQQSmyChart() {
         var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain'));
+        SQQSmyChart.setOption({
+            series: {
+                type: 'sunburst',
+                // highlightPolicy: 'ancestor',
+                data: [{
+                    name: 'Grandpa',
+                    children: [{
+                        name: 'Uncle Leo',
+                        value: 15,
+                        children: [{
+                            name: 'Cousin Jack',
+                            value: 2
+                        }, {
+                            name: 'Cousin Mary',
+                            value: 5,
+                            children: [{
+                                name: 'Jackson',
+                                value: 2
+                            }]
+                        }, {
+                            name: 'Cousin Ben',
+                            value: 4
+                        }]
+                    }, {
+                        name: 'Father',
+                        value: 10,
+                        children: [{
+                            name: 'Me',
+                            value: 5
+                        }, {
+                            name: 'Brother Peter',
+                            value: 1
+                        }]
+                    }]
+                }, {
+                    name: 'Nancy',
+                    children: [{
+                        name: 'Uncle Nike',
+                        children: [{
+                            name: 'Cousin Betty',
+                            value: 1
+                        }, {
+                            name: 'Cousin Jenny',
+                            value: 2
+                        }]
+                    }]
+                }],
+                radius: [0, '90%'],
+                label: {
+                    rotate: 'radial'
+                }
+            }
+        });
         $.ajax({
             url: 'http://172.21.201.141:8000/getUserImage',
             type: "GET",
