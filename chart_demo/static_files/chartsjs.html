@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>专利分析可视化</title>
+    <link rel="stylesheet" href="css/style.css"/>
+<!--    <link rel="stylesheet" href="layui/css/layui.css" media="all">-->
+    <style type="text/css">
+        .leftp {
+            padding: 3px 5px;
+            overflow: hidden;
+            cursor: pointer;
+            display: block;
+        }
+        .leftanabutt{
+            background:transparent;	/*按钮背景透明*/
+            border-width:0px;	/*边框透明*/
+            outline:none;	/*点击后没边框*/
+        }
+        .leftanabutt:hover{
+            font-weight: bold;
+            color: #ff4d6b;
+        }
+    </style>
+</head>
+<body style="background-color: #ecf0f4;">
+<div style="overflow: hidden;">
+    <div>
+        <div class="content-wrapper" style=" height: 80%">
+            <div class="row">
+                <div class="card" style="width: 20%">
+                    <div class="card-body">
+                        <h4 class="card-title">分析方法</h4>
+                        <div style="padding: 20px 0px 20px 0px;">
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('目标专利全球申请趋势','SQQS',this)">全球专利申请趋势</button></p>
+
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('全球专利分布图','MBYZ',this)">全球专利分布图</button></p>
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高强度专利分析','FZQS',this)">高强度专利分析</button></p>
+
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('目标专利来源国分析','LYG',this)">词云</button></p>-->
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利来源国分析','MDG',this)">专利来源国分析</button></p>
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('IPC分类分析','IFL',this)">IPC分类分析</button></p>-->
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('专利图景分析','ZLTJ',this)">专利图景分析</button></p>-->
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('高强度专利分析','GQD',this)">高强度专利分析</button></p>-->
+                            <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('申请人高强度分析','SQRGQD',this)">申请人高强度分析</button></p>
+                            <!--                                <p class="leftp" ><button class="leftanabutt"  onclick="getAnaCharts('同族专利分析','TZZL',this)">领域内聚类分析</button></p>-->
+                        </div>
+                    </div>
+                </div>
+                <!--                </div>-->
+                <!--                <div class="col-lg-9 stretch-card">-->
+                <div class="card" style="width: 80%">
+                    <div class="card-body">
+                        <!--                            <h4 class="h4">分析结果</h4>-->
+                        <!--                            <p class="card-description"> Analysis Results</p>-->
+                        <div id="SQQSAnaChartMain" style="width: 100%;height: 100%; "> </div>
+                        <div id="FZQSAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="MBYZAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="TZZLAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="LYGAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="MDGAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="IFLAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="ZLTJAnaChartMain" style="width: 0;height: 0;  "> </div>
+                        <div id="GQDAnaChartMain"  style="width: 0;height: 0;  "> </div>
+                        <div id="SQRGQDAnaChartMain" style="width: 0;height: 0;  "> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js" language="JavaScript"></script>
+<!--<script src="layui/layui.js"></script>-->
+<!--<script src="../js/base64.min.js"></script>-->
+<script src="js/config.js"></script>
+<script src="js/echarts.js"></script>
+<script type="text/javascript">
+    var SQQSAnaChartMainflag = 'none';
+    var FZQSAnaChartMainflag = 'none';
+    var MBYZAnaChartMainflag = 'none';
+    var TZZLAnaChartMainflag = 'none';
+    var LYGAnaChartMainflag = 'none';
+    var MDGAnaChartMainflag = 'none';
+    var IFLAnaChartMainflag = 'none';
+    var ZLTJAnaChartMainflag = 'none';
+    var GQDAnaChartMainflag = 'none';
+    var SQRGQDAnaChartMainflag = 'none';
+
+    // $(document).keydown(function(event){
+    //     if(event.keyCode===13){
+    //         $("#AnaBT").click();
+    //     }
+    // });
+    // $("#ReturnAnaBT").click(function () {
+    //     sq.open("analysis.html");
+    // });
+    // $("#AnaBT").click(function () {
+    //     if( $("#AnaInput").val().replace(/(^\s*)|(\s*$)/g, "").length > 0){
+    //         AnaTIval = $("#AnaInput").val().replace(/(^\s*)|(\s*$)/g, "");
+    //         // sq.open("analysisDetails.html#Ana_TI=(" + encodeURIComponent("\"" + $("#AnaInput").val() + "\"") + ")&Ana_PA=Val_None&Ana_IPC=Val_None&Ana_TimeStr=Val_None&Ana_TimeEnd=Val_None");
+    //     }
+    //     else {
+    //         // layer.alert('请先输入专利关键词');
+    //         AnaTIval = 'ValNone';
+    //     }
+    //     sq.open("analysisDetails.html#AnaTI="+AnaTIval+"&AnaPA=ValNone&AnaIPC=ValNone&AnaTimeStr=ValNone&AnaTimeEnd=ValNone");
+    // });
+    // # 'SQQS','FZQS', 'MBYZ','TZZL','LYG','MDG','IFL','ZLTJ','GQD','SQRGQD',
+
+    // var AnadataObj = new Object();
+    // AnaTI = (sq.getHashStringArgs().AnaTI === undefined) ? "ValNone" : sq.getHashStringArgs().AnaTI;
+    // AnaPA = (sq.getHashStringArgs().AnaPA === undefined) ? "ValNone" : sq.getHashStringArgs().AnaPA;
+    // AnaIPC = (sq.getHashStringArgs().AnaIPC === undefined) ? "ValNone" : sq.getHashStringArgs().AnaIPC;
+    // AnaTimeStr = (sq.getHashStringArgs().AnaTimeStr === undefined) ? "ValNone" : sq.getHashStringArgs().AnaTimeStr;
+    // AnaTimeEnd = (sq.getHashStringArgs().AnaTimeEnd === undefined) ? "ValNone" : sq.getHashStringArgs().AnaTimeEnd;
+    // var AnaKeyWords = 'AnaTI='+AnaTI+'&AnaPA='+AnaPA+'&AnaIPC='+AnaIPC+'&AnaTimeStr='+AnaTimeStr+'&AnaTimeEnd='+AnaTimeEnd;
+    // console.log('AnaKeyWords:'+AnaKeyWords);
+    // AnadataObj = {
+    //     anakeyword: AnaKeyWords,
+    //     ananame: '目标专利全球申请趋势分析',
+    //     anacode : 'SQQS',
+    // };
+    toAnalyse($(".leftanabutt:first"));
+
+    //添加分析信息，调用发送请求
+    function getAnaCharts(AnaChartName,AnaChartCode,obj) {
+        // AnadataObj.ananame = AnaChartName;
+        // AnadataObj.anacode = AnaChartCode;
+        toAnalyse(obj);
+    }
+
+    //发送分析请求，进行分析
+    function toAnalyse(obj) {
+        //改变点击的按钮颜色
+        changebuttcolor(obj);
+        switch (AnadataObj.anacode) {
+            case "SQQS":
+                if (SQQSAnaChartMainflag === 'haveinline') {
+                    chartshowchange('SQQSAnaChartMain');
+                    break;
+                }
+                //隐藏其他图表div，显示本图表div
+                chartshowchange('SQQSAnaChartMain');
+                setSQQSmyChart();
+                break;
+            case 'FZQS':
+                if (FZQSAnaChartMainflag === 'haveinline') {
+                    chartshowchange('FZQSAnaChartMain');
+                    break;
+                }
+                chartshowchange('FZQSAnaChartMain');
+                setFZQSmyChart();
+                break;
+            case 'MBYZ':
+                if (MBYZAnaChartMainflag === 'haveinline') {
+                    chartshowchange('MBYZAnaChartMain');
+                    break;
+                }
+                chartshowchange('MBYZAnaChartMain');
+                setMBYZmyChart();
+
+                break;
+            case 'TZZL':
+                //聚类分析
+                if (TZZLAnaChartMainflag === 'haveinline') {
+                    chartshowchange('TZZLAnaChartMain');
+                    break;
+                }
+                chartshowchange('TZZLAnaChartMain');
+                var TZZLmyChart = echarts.init(document.getElementById('TZZLAnaChartMain'));
+                TZZLAnaChartMainflag = 'haveinline';
+                break;
+            // # 'SQQS','FZQS', 'MBYZ','TZZL','LYG','MDG','IFL','ZLTJ','GQD','SQRGQD',
+            case 'LYG':
+                if (LYGAnaChartMainflag === 'haveinline') {
+                    chartshowchange('LYGAnaChartMain');
+                    break;
+                }
+                chartshowchange('LYGAnaChartMain');
+                var LYGmyChart = echarts.init(document.getElementById('LYGAnaChartMain'));
+                LYGAnaChartMainflag = 'haveinline';
+                break;
+            case 'MDG':
+                if (MDGAnaChartMainflag === 'haveinline') {
+                    chartshowchange('MDGAnaChartMain');
+                    break;
+                }
+                chartshowchange('MDGAnaChartMain');
+                setMDGmyChart();
+                break;
+            case 'IFL':
+                if (IFLAnaChartMainflag === 'haveinline') {
+                    chartshowchange('IFLAnaChartMain');
+                    break;
+                }
+                chartshowchange('IFLAnaChartMain');
+                var IFLmyChart = echarts.init(document.getElementById('IFLAnaChartMain'));
+                IFLAnaChartMainflag = 'haveinline';
+                break;
+            case 'ZLTJ':
+                if (ZLTJAnaChartMainflag === 'haveinline') {
+                    chartshowchange('ZLTJAnaChartMain');
+                    break;
+                }
+                chartshowchange('ZLTJAnaChartMain');
+                var ZLTJmyChart = echarts.init(document.getElementById('ZLTJAnaChartMain'));
+                ZLTJAnaChartMainflag = 'haveinline';
+                break;
+            case 'GQD':
+                if (GQDAnaChartMainflag === 'haveinline') {
+                    chartshowchange('GQDAnaChartMain');
+                    break;
+                }
+                chartshowchange('GQDAnaChartMain');
+                var GQDmyChart = echarts.init(document.getElementById('GQDAnaChartMain'));
+                GQDAnaChartMainflag = 'haveinline';
+                break;
+            case 'SQRGQD':
+                if (SQRGQDAnaChartMainflag === 'haveinline') {
+                    chartshowchange('SQRGQDAnaChartMain');
+                    break;
+                }
+                chartshowchange('SQRGQDAnaChartMain');
+                setSQRGQDmyChart();
+                break;
+            default:
+                sq.msg('请选择正确的分析算法');
+                break;
+        }
+    }
+    //当url变化时进行操作
+    window.onhashchange = function () {
+        console.log('AnaKeyWords:'+AnaKeyWords);
+        AnadataObj = {
+            anakeyword: AnaKeyWords,
+            ananame: '目标专利全球申请趋势分析',
+            anacode : 'SQQS',
+        };
+        refrashhtneir();
+        toAnalyse($(".leftanabutt:first"));
+
+    };
+    function refrashhtneir(){
+        refrashchartflagzhuang();
+    }
+    function refrashchartflagzhuang(){
+        SQQSAnaChartMainflag = 'none';
+        FZQSAnaChartMainflag = 'none';
+        MBYZAnaChartMainflag = 'none';
+        TZZLAnaChartMainflag = 'none';
+        LYGAnaChartMainflag = 'none';
+        MDGAnaChartMainflag = 'none';
+        IFLAnaChartMainflag = 'none';
+        ZLTJAnaChartMainflag = 'none';
+        GQDAnaChartMainflag = 'none';
+        SQRGQDAnaChartMainflag = 'none';
+    }
+
+    //鼠标滑过变色，如果不是点击的那个按钮就变色
+    $(".leftanabutt:button").hover(function () {
+        var lincolor  = rgb2hex($(this).css("color"));
+        if (lincolor !== "#ff4d6b"){
+            // console.log(lincolor);
+            $(this).css({
+                "font-weight":"bold",
+                "color":"#eb4762"
+            })
+        }
+
+    },function() {
+        var lincolor  = rgb2hex($(this).css("color"));
+        // console.log("gaibian2:"+lincolor);
+        if (lincolor === "#eb4762") {
+
+            $(this).css({
+                "font-weight": "normal",
+                "color": "#000000"
+            });
+        }
+    });
+    //RGB转16进制
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        function hex(x) {
+            return ("0" + parseInt(x).toString(16)).slice(-2);
+        }
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+    //点击变色
+    function changebuttcolor(obj){
+        $(".leftanabutt").css({
+            "font-weight":"normal",
+            "color":"#000000"
+        });
+        $(obj).css({
+            "font-weight":"bold",
+            "color":"#ff4d6b"
+        });
+    }
+    //图表切换
+    function chartshowchange(obj) {
+        chartshowchangestyle('SQQSAnaChartMain');
+        chartshowchangestyle('FZQSAnaChartMain');
+        chartshowchangestyle('MBYZAnaChartMain');
+        chartshowchangestyle('TZZLAnaChartMain');
+        chartshowchangestyle('LYGAnaChartMain');
+        chartshowchangestyle('MDGAnaChartMain');
+        chartshowchangestyle('IFLAnaChartMain');
+        chartshowchangestyle('ZLTJAnaChartMain');
+        chartshowchangestyle('GQDAnaChartMain');
+        chartshowchangestyle('SQRGQDAnaChartMain');
+        $('#'+obj).css({
+            "display":"block",
+            "width": "100%",
+            "height":"100%",
+        });
+    }
+
+    function chartshowchangestyle(obj) {
+        $('#'+obj).css({
+            "display":"none",
+            "width": "0",
+            "height":"0",
+        });
+    }
+    function setMDGmyChart() {
+        var MDGmyChart = echarts.init(document.getElementById('MDGAnaChartMain'));
+        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
+            .sucessFun(function (rel) {
+                MDGmyChart.setOption({
+                    series: [{
+                        type: 'treemap',
+                        data: rel.data
+                    }]
+                });
+                MDGAnaChartMainflag = 'haveinline';
+            }).run();
+    }
+
+
+    function setSQRGQDmyChart() {
+        var SQRGQDmyChart = echarts.init(document.getElementById('SQRGQDAnaChartMain'));
+        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
+            .sucessFun(function (rel) {
+                SQRGQDmyChart.setOption({
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'line',
+                            lineStyle: {
+                                color: 'rgba(0,0,0,0.2)',
+                                width: 1,
+                                type: 'solid'
+                            }
+                        }
+                    },
+                    legend: {
+                        data: rel.data["legenddata"]
+
+                    },
+                    singleAxis: {
+                        top: 50,
+                        bottom: 50,
+                        axisTick: {},
+                        axisLabel: {},
+                        type: 'time',
+                        axisPointer: {
+                            animation: true,
+                            label: {
+                                show: true
+                            }
+                        },
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                type: 'dashed',
+                                opacity: 0.2
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'themeRiver',
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 20,
+                                    shadowColor: 'rgba(0, 0, 0, 0.8)'
+                                }
+                            },
+                            data: rel.data["seriesdata"]
+                        }
+                    ]
+                });
+                SQRGQDAnaChartMainflag = 'haveinline';
+            }).run();
+    }
+
+    function setSQQSmyChart() {
+        var SQQSmyChart = echarts.init(document.getElementById('SQQSAnaChartMain'));
+        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
+            .sucessFun(function (rel) {
+                // SQQSmyChart.hideLoading();
+                SQQSmyChart.setOption({
+                    backgroundColor: '#0f375f',
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['全球专利申请数量', '全球申请人数量' , '在华专利申请量'],
+                        textStyle: {
+                            color: '#ccc'
+                        }
+                    },
+                    xAxis: {
+                        data: rel.data['Chart_x1_data'],
+                        axisLine: {
+                            lineStyle: {
+                                color: '#ccc'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        splitLine: {show: false},
+                        axisLine: {
+                            lineStyle: {
+                                color: '#ccc'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '全球专利申请数量',
+                        type: 'line',
+                        smooth: true,
+                        showAllSymbol: true,
+                        symbol: 'emptyCircle',
+                        symbolSize: 15,
+                        data: rel.data['Global_patent_applications_data']
+                    },{
+                        name: '在华专利申请量',
+                        type: 'line',
+                        smooth: true,
+                        showAllSymbol: true,
+                        symbol: 'emptyCircle',
+                        symbolSize: 15,
+                        data: rel.data['Chinese_patent_applications_data']
+                    },{
+                        name: '全球申请人数量',
+                        type: 'bar',
+                        barWidth: 10,
+                        itemStyle: {
+                            barBorderRadius: 5,
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: '#14c8d4'},
+                                    {offset: 1, color: '#43eec6'}
+                                ]
+                            )
+                        },
+                        data: rel.data['Number_of_applicants_worldwide_data']
+                    }, {
+                        name: '全球专利申请数量',
+                        type: 'bar',
+                        barGap: '-100%',
+                        barWidth: 10,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                                    {offset: 1, color: 'rgba(20,200,212,0)'}
+                                ]
+                            )
+                        },
+                        z: -12,
+                        data: rel.data['Global_patent_applications_data']
+                    }, {
+                        name: '全球专利申请数量',
+                        type: 'pictorialBar',
+                        symbol: 'rect',
+                        itemStyle: {
+                            color: '#0f375f'
+                        },
+                        symbolRepeat: true,
+                        symbolSize: [12, 4],
+                        symbolMargin: 1,
+                        z: -10,
+                        data: rel.data['Global_patent_applications_data']
+                    }]
+                });
+                SQQSAnaChartMainflag = 'haveinline';
+            }).run();
+    }
+
+    function setFZQSmyChart() {
+        var FZQSmyChart = echarts.init(document.getElementById('FZQSAnaChartMain'));
+        sq.setapi("analyseapi/analysechartdata").setdata(AnadataObj)
+            .sucessFun(function (rel) {
+                console.log(rel.data[0][1]);
+
+                FZQSoption = {
+                    title: {
+                        text: '分析结果'
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis',
+                        showContent: false
+                    },
+                    dataset: {
+                        source: rel.data
+                    },
+                    xAxis: {type: 'category'},
+                    yAxis: {gridIndex: 0},
+                    grid: {top: '33%'},
+                    series: [
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {type: 'line', smooth: true, seriesLayoutBy: 'row'},
+                        {
+                            type: 'pie',
+                            id: 'pie',
+                            radius: '20%',
+                            center: ['50%', '18%'],
+                            label: {
+                                formatter: '{b}: {@ rel.data[0][1]} ({d}%)'
+                            },
+                            encode: {
+                                itemName: 'product',
+                                // value: "2012",
+                                // tooltip: "2012"
+                                value: rel.data[0][1],
+                                tooltip: rel.data[0][1]
+                            }
+                        }
+                    ]
+                };
+                FZQSmyChart.on('updateAxisPointer', function (event) {
+                    var xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        var dimension = xAxisInfo.value + 1;
+                        FZQSmyChart.setOption({
+                            series: {
+                                id: 'pie',
+                                label: {
+                                    formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                },
+                                encode: {
+                                    value: dimension,
+                                    tooltip: dimension
+                                }
+                            }
+                        });
+                    }
+                });
+                FZQSmyChart.setOption(FZQSoption);
+                FZQSAnaChartMainflag = 'haveinline';
+            }).run();
+    }
+</script>
+</html>
